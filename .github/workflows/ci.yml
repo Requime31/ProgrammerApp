@@ -34,5 +34,5 @@ jobs:
           xcodebuild test \
             -project "ProgrammerApp.xcodeproj" \
             -scheme "ProgrammerApp" \
-            -destination "generic/platform=iOS Simulator" \
+            -destination "platform=iOS Simulator,OS=18.2,name=iPhone 16" \
             -configuration Debug
