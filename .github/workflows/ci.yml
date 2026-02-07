@@ -7,18 +7,14 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: macos-15
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
 
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: "16.4"
-          
-      - name: Install iOS platform (simulators)
-        run: |
-          xcodebuild -downloadPlatform iOS
+          xcode-version: "15.4"
           
       - name: Xcode version
         run: xcodebuild -version
@@ -51,5 +47,5 @@ jobs:
           xcodebuild test \
             -project "ProgrammerApp.xcodeproj" \
             -scheme "ProgrammerApp" \
-            -destination "id=$DEVICE_ID" \
+            -destination "platform=iOS Simulator,OS=17.5,name=iPhone 15"
             -configuration Debug
