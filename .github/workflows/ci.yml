@@ -29,10 +29,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spm-
             
-      - name: Build & Test (Simulator)
-        run: |
-          xcodebuild build \
-            -project "ProgrammerApp.xcodeproj" \
-            -scheme "ProgrammerApp" \
-            -destination "generic/platform=iOS Simulator"
-            -configuration Debug
+            - name: Build (Simulator)
+        run: xcodebuild build -project "ProgrammerApp.xcodeproj" -scheme "ProgrammerApp" -destination "generic/platform=iOS Simulator" -configuration Debug
