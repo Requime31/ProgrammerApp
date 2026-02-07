@@ -28,11 +28,24 @@ jobs:
           key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
             ${{ runner.os }}-spm-
-
+            
       - name: Build & Test (Simulator)
         run: |
+          DEST=$(xcodebuild -showdestinations -project "ProgrammerApp.xcodeproj" -scheme "ProgrammerApp" \
+            | grep "platform:iOS Simulator" \
+            | head -1 \
+            | sed 's/^[[:space:]]*//')
+          if [ -z "$DEST" ]; then
+            echo "No iOS Simulator destination found"
+            exit 1
+          fi
+          # Extract id=... from the line if needed; some setups use -destination "id=UUID"
+          # Simpler: use OS and name from the line. Parsing is brittle, so alternatively
+          # just run with the first destination by id.
+          DEVICE_ID=$(echo "$DEST" | sed -n 's/.*id:\([^,)]*\).*/\1/p')
+          echo "Using destination: $DEST"
           xcodebuild test \
             -project "ProgrammerApp.xcodeproj" \
             -scheme "ProgrammerApp" \
-            -destination "platform=iOS Simulator,OS=18.2,name=iPhone 16" \
+            -destination "id=$DEVICE_ID" \
             -configuration Debug
