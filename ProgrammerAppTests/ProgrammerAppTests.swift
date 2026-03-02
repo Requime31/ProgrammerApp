@@ -21,8 +21,7 @@ final class ProgrammerAppTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        persistence = nil
-        try super.tearDownWithError()
+        try super.tearDownWithError()   
     }
 
     // MARK: - PersistenceService primitive types
